@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # myadmin
 
 ## Project setup
@@ -27,3 +28,7 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+=======
+# my-admin
+后台管理（前端）
+>>>>>>> f1daee27c3700068fadf3c18477b7681a40a859f
