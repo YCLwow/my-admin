@@ -28,33 +28,47 @@ export function downloadFile(response, name) {
 
 }
 /**
- * 防抖 点击后延迟执行
+ * 防抖 点击后延迟执行(也可立即执行)
  * @param {Function} fun - 执行函数
  * @param {Number} time - 延时时间
  * @param {Boolean} immediate -是否需要立即执行
  */
 export function debounce(fn, wait, immediate) {
+  // 外部函数无法销毁(因为内部函数被返回出去，且一直调用外部函数中的变量),返回出去的内部函数又可以访问外部函数的变量，形成闭包
   let timer
+  let nowTimer
+  let callNow = immediate
   return function () {
     if (timer) clearTimeout(timer);
-    if (immediate) {
-      // 如果已经执行过，不再执行
-      var callNow = !timer;
-      timer = setTimeout(() => {
-        timer = null;
+    if (nowTimer) clearTimeout(nowTimer)
+    if (callNow) {
+      // 需要立即执行
+      fn.apply(this, arguments)
+      callNow = false
+      nowTimer = setTimeout(() => {
+        callNow = true
       }, wait)
-      if (callNow) {
-        fn.apply(this, arguments)
-      }
     } else {
       timer = setTimeout(() => {
+        callNow = immediate
         fn.apply(this, arguments)
       }, wait);
     }
   }
 }
-  /**
+/**
 * 节流 X秒内只执行一次(点击后立马执行,X秒时间额外的点击不生效)
 * @param {Function} fun - 执行函数
-* @param {Number} time - 延时时间
+* @param {Number} time - 定时时间
 */
+export function throttle(fn, wait) {
+  let canRun = true
+  return function () {
+    if (!canRun) return
+    canRun = false;
+    setInterval(() => {
+      fn()
+      canRun = true;
+    }, wait)
+  }
+}

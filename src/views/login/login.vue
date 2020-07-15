@@ -2,7 +2,7 @@
  * @Author: liuyichen 
  * @Date: 2020-07-04 15:19:06 
  * @Last Modified by: liuyichen
- * @Last Modified time: 2020-07-13 15:31:45
+ * @Last Modified time: 2020-07-14 14:54:46
  */
 <template>
   <div class="login-container">
@@ -84,32 +84,29 @@ export default {
     }
   },
   methods: {
-    loginSubmit: debounce(() => {
-      console.log('延时两秒')
+    loginSubmit: debounce(function () {
+      console.log('提交')
+      // this.$refs.loginForm.validate(vaild => {
+      //   if (vaild) {
+      //     console.log('校验通过')
+      //     // 加载完毕
+      //     this.loading = true
+      //     // 保证登录后获得的token,全局都可以调用我们应该存储在cookie和vuex中
+      //     this.$store.dispatch('user/login', this.loginForm).then(() => {
+      //       // 跳转页面到首页
+      //       this.$router.push({ path: '/home' })
+      //     }).catch((error) => {
+      //       console.log(error)
+      //     })
+      //     this.loading = false
+      //   } else {
+      //     console.log('错误的提交')
+      //     return false
+      //   }
+      // })
+      // const testEx = new MSchool('构造名字')
+      // testEx.sayName('参数名字')
     }, 2000, true),
-    // loginSubmit() {
-    //   console.log(this.$refs.loginForm)
-    //   this.$refs.loginForm.validate(vaild => {
-    //     if (vaild) {
-    //       console.log('校验通过')
-    //       // 加载完毕
-    //       this.loading = true
-    //       // 保证登录后获得的token,全局都可以调用我们应该存储在cookie和vuex中
-    //       this.$store.dispatch('user/login', this.loginForm).then(() => {
-    //         // 跳转页面到首页
-    //         this.$router.push({ path: '/home' })
-    //       }).catch((error) => {
-    //         console.log(error)
-    //       })
-    //       this.loading = false
-    //     } else {
-    //       console.log('错误的提交')
-    //       return false
-    //     }
-    //   })
-    //   // const testEx = new MSchool('构造名字')
-    //   // testEx.sayName('参数名字')
-    // },
     oginReset() {
       // 防抖
       console.log('重置')
@@ -122,27 +119,7 @@ export default {
     async register() {
       const res = await this.register(this.loginForm)
       console.log(res)
-    },
-    // debounce(fun, wait) {
-    //   let that = this
-    //   if (!this.timer) {
-    //     this.timer = null
-    //   }
-    //   if (this.timer) clearTimeout(this.timer)
-    //   // 保证用户正常点击可以使用
-    //   if (this.flag) {
-    //     this.flag = false
-    //     this.timer = setTimeout(() => {
-    //       // 间隔2s后,恢复正常点击
-    //       that.flag = true
-    //     }, 2000)
-    //     return
-    //   }
-    //   // 用户频繁点击需延时执行
-    //   this.timer = setTimeout(function () {
-    //     that.flag = true
-    //   }, 2000);
-    // }
+    }
   }
 }
 </script>

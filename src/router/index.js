@@ -7,6 +7,7 @@ import Home from '../views/home/home.vue'
 
 Vue.use(VueRouter)
 
+// 通用路由
 const routes = [
   {
     path: '/login',
@@ -32,25 +33,6 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
-})
-
-router.beforeEach(async (to, from, next) => {
-  const hasToken = getToken()
-  console.log(hasToken)
-  if (hasToken) {
-    if (to.path === '/login') {
-      next('/home')
-    } else {
-      next()
-    }
-  } else {
-    console.log('未登录,请去登录')
-    if (to.name === 'login') {
-      next()
-    } else {
-      next('login')
-    }
-  }
 })
 
 export default router
