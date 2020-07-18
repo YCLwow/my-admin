@@ -2,7 +2,7 @@
  * @Author: liuyichen 
  * @Date: 2020-07-04 15:19:06 
  * @Last Modified by: liuyichen
- * @Last Modified time: 2020-07-14 14:54:46
+ * @Last Modified time: 2020-07-15 08:16:27
  */
 <template>
   <div class="login-container">
@@ -86,24 +86,24 @@ export default {
   methods: {
     loginSubmit: debounce(function () {
       console.log('提交')
-      // this.$refs.loginForm.validate(vaild => {
-      //   if (vaild) {
-      //     console.log('校验通过')
-      //     // 加载完毕
-      //     this.loading = true
-      //     // 保证登录后获得的token,全局都可以调用我们应该存储在cookie和vuex中
-      //     this.$store.dispatch('user/login', this.loginForm).then(() => {
-      //       // 跳转页面到首页
-      //       this.$router.push({ path: '/home' })
-      //     }).catch((error) => {
-      //       console.log(error)
-      //     })
-      //     this.loading = false
-      //   } else {
-      //     console.log('错误的提交')
-      //     return false
-      //   }
-      // })
+      this.$refs.loginForm.validate(vaild => {
+        if (vaild) {
+          console.log('校验通过')
+          // 加载完毕
+          this.loading = true
+          // 保证登录后获得的token,全局都可以调用我们应该存储在cookie和vuex中
+          this.$store.dispatch('user/login', this.loginForm).then(() => {
+            // 跳转页面到首页
+            this.$router.push({ path: '/home' })
+          }).catch((error) => {
+            console.log(error)
+          })
+          this.loading = false
+        } else {
+          console.log('错误的提交')
+          return false
+        }
+      })
       // const testEx = new MSchool('构造名字')
       // testEx.sayName('参数名字')
     }, 2000, true),

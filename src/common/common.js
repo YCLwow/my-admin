@@ -25,7 +25,8 @@ export function downloadFile(response, name) {
   document.body.removeChild(a)
   // 释放，防止占用内存
   URL.revokeObjectURL(url)
-
+  // 移除该对象
+  document.body.removeChild(a)
 }
 /**
  * 防抖 点击后延迟执行(也可立即执行)
@@ -71,4 +72,23 @@ export function throttle(fn, wait) {
       canRun = true;
     }, wait)
   }
+}
+
+/**
+ * 上传(给input的onchange注册该事件loadfile(event))
+ *  <img src="" alt="" id="previewContainer">
+ *  <input type="file" accept="image/*" onchange="loadFile(event)" />
+ */
+export function loadFile(event) {
+  const reader = new FileReader()
+  // 页面body元素加载完毕后执行
+  reader.onload = function () {
+    // 抓取页面元素
+    const output = document.querySelector('#previewContainer')
+    // 给页面元素的src属性赋值，用来展示该图片
+    output.src = reader.result
+  }
+  console.log(event.target.files[0])
+  // 包含图片的所有信息
+  reader.readAsDataURL(event.target.files[0]);
 }
