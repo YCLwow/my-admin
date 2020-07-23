@@ -92,3 +92,38 @@ export function loadFile(event) {
   // 包含图片的所有信息
   reader.readAsDataURL(event.target.files[0]);
 }
+
+/**
+ * 嵌套数据筛选
+ * @param {Array} array 
+ * @param {String} value 
+ */
+
+export function nodeFilter(array, value) {
+  return array.filter(node => {
+    if (node.name.includes(value)) {
+      if (node.children) {
+        node.children = node.children.filter(item => {
+          if (item.name.includes(value)) {
+            return item
+          }
+        })
+      }
+      return node
+    }
+    if (node.children) {
+      node.children = this.nodeFilter(node.children, value)
+      return node.children.length > 0
+    }
+    return false
+  })
+}
+
+// /**
+//  * 嵌套数据扁平化
+//  * @param {Array} array 
+//  * @param {string} value 
+//  */
+// export function nodeReduce(array, value) {
+
+// }

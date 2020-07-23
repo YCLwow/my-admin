@@ -2,7 +2,7 @@
  * @Author: liuyichen 
  * @Date: 2020-07-04 15:19:06 
  * @Last Modified by: liuyichen
- * @Last Modified time: 2020-07-15 08:16:27
+ * @Last Modified time: 2020-07-20 17:50:46
  */
 <template>
   <div class="login-container">
@@ -81,6 +81,43 @@ export default {
       index: 0,
       flag: true,
       timer: '',
+      arr: [
+        {
+          'id': '1',
+          'name': '系统',
+          'pid': '0'
+        },
+        {
+          'id': '2',
+          'name': '我的面板',
+          'pid': '1'
+        },
+        {
+          'id': '3',
+          'name': '内容管理',
+          'pid': '1'
+        },
+        {
+          'id': '4',
+          'name': '个人信息',
+          'pid': '2'
+        },
+        {
+          'id': '5',
+          'name': '文件管理',
+          'pid': '2'
+        },
+        {
+          'id': '6',
+          'name': '统计分析',
+          'pid': '3',
+          children: [{
+            'id': '6',
+            'name': '统计分析',
+            'pid': '3',
+          }]
+        }
+      ]
     }
   },
   methods: {
@@ -109,12 +146,11 @@ export default {
     }, 2000, true),
     oginReset() {
       // 防抖
-      console.log('重置')
-      this.loginForm = {
-        name: '',
-        password: ''
-      }
-
+      // console.log('重置')
+      // this.loginForm = {
+      //   name: '',
+      //   password: ''
+      // }
     },
     async register() {
       const res = await this.register(this.loginForm)
