@@ -30,15 +30,15 @@ service.interceptors.request.use(
 )
 service.interceptors.response.use(
   response => {
-    const res = response
-    if (res.status !== 200) {
+    const res = response.data
+    if (response.status !== 200) {
       Message({
         message: res.message || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
     }
-    if (res.status === 401 || res.status === 402 || res.status === 403) {
+    if (response.status === 401 || response.status === 402 || response.status === 403) {
       // to re-login
       MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
         confirmButtonText: '重新登陆',
@@ -55,9 +55,8 @@ service.interceptors.response.use(
       console.log('响应错误')
       return Promise.reject(new Error(res.message || 'Error'))
     }
-    else {
-      return res
-    }
+    console.log(res)
+    return res
   },
   error => {
     console.log('err' + error)

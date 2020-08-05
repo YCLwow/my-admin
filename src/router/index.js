@@ -3,6 +3,8 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import { getToken } from '@/utils/auth'
 import Login from '../views/login/login.vue'
 import Home from '../views/home/home.vue'
+import Management from '../components/account/management.vue'
+import Tinymce from '../components/Tinymce/tinymce.vue'
 
 
 Vue.use(VueRouter)
@@ -18,6 +20,18 @@ const routes = [
     path: '/home',
     name: 'home',
     component: Home,
+    children: [
+      {
+        path: 'management',
+        name: 'management',
+        component: Management
+      },
+      {
+        path: 'tinymce',
+        name: 'tinymce',
+        component: Tinymce
+      }
+    ]
   },
   //路由重定向
   { path: '/', redirect: '/login' },

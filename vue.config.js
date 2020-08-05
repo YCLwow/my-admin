@@ -7,7 +7,7 @@ const path = require('path');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const resolve = (dir) => path.join(__dirname, dir);
 module.exports = {
-  publicPath: process.env.NODE_ENV === '/',  // 公共路径
+  publicPath: '/',  // 公共路径
   indexPath: 'index.html', // 相对于打包路径index.html的路径
   outputDir: process.env.outputDir || 'dist', // 'dist', 生产环境构建文件的目录
   assetsDir: 'static', // 相对于outputDir的静态资源(js、css、img、fonts)目录
@@ -70,12 +70,12 @@ module.exports = {
     // proxy: 'http://localhost:3000'
     proxy: { //配置多个跨域
       "/dev": {
-        target: "http://localhost:3000",
+        target: "http://localhost:4000",
         changeOrigin: true,
         // ws: true,//websocket支持
         secure: false,
         pathRewrite: {
-          "^/dev": ""
+          "^/dev": "prod"
         }
       },
       "/prod": {
@@ -84,7 +84,7 @@ module.exports = {
         //ws: true,//websocket支持
         secure: false,
         pathRewrite: {
-          "^/prod": ""
+          "^/prod": "prod"
         }
       },
     }

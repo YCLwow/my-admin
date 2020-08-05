@@ -1,5 +1,6 @@
 import { login } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import { messageBox, Message } from 'element-ui'
 
 const state = {
   token: getToken()
@@ -16,12 +17,19 @@ const actions = {
     const { name, password } = userInfo
     // 当请求的方法执行完毕后才执行后面的方法
     return new Promise((resolve, reject) => {
-      login({ name, password }).then(response => {
-        const data = response
-        console.log(data.token)
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
+      login({ name, password }).then(res => {
+        console.log(res.msg)
+        if (res.msg === 'success') {
+          const token = res.data.token
+          commit('SET_TOKEN', token)
+          setToken(token)
+          resolve(res)
+        } else {
+          Message({
+            type: 'error',
+            message: res.data.error
+          })
+        }
       }).catch(error => {
         reject(error)
       })

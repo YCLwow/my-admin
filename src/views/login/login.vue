@@ -2,10 +2,11 @@
  * @Author: liuyichen 
  * @Date: 2020-07-04 15:19:06 
  * @Last Modified by: liuyichen
- * @Last Modified time: 2020-07-20 17:50:46
+ * @Last Modified time: 2020-07-29 10:46:05
  */
 <template>
   <div class="login-container">
+    <!-- 登录 -->
     <el-form
       status-icon
       ref="loginForm"
@@ -36,23 +37,39 @@
         <el-button type="primary" @click="loginSubmit('loginForm')"
           >提交</el-button
         >
-        <el-button @click="oginReset('loginForm')">重置</el-button>
+        <el-button @click="loginReset('loginForm')">重置</el-button>
       </el-form-item>
     </el-form>
+    <el-button type="danger" @click="register" class="register_button"
+      >注册</el-button
+    >
+    <!-- 注册 -->
+    <el-dialog
+      title="请填写您的用户信息"
+      :visible.sync="registerVisible"
+      width="30%"
+    >
+      <Register></Register>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import { validUsername } from '@/utils/validate'
-import { setToken } from '@/utils/auth'
+
 import { login, register } from "../../api/user"
+
+import { setToken } from '@/utils/auth'
 import MSchool from '../../common/extend'
 import { debounce } from '../../common/common'
+
+import Register from './register/register.vue'
 
 export default {
   name: "login",
   components: {
+    Register
   },
   data() {
     const validateUsername = (rule, value, callback) => {
@@ -81,81 +98,39 @@ export default {
       index: 0,
       flag: true,
       timer: '',
-      arr: [
-        {
-          'id': '1',
-          'name': '系统',
-          'pid': '0'
-        },
-        {
-          'id': '2',
-          'name': '我的面板',
-          'pid': '1'
-        },
-        {
-          'id': '3',
-          'name': '内容管理',
-          'pid': '1'
-        },
-        {
-          'id': '4',
-          'name': '个人信息',
-          'pid': '2'
-        },
-        {
-          'id': '5',
-          'name': '文件管理',
-          'pid': '2'
-        },
-        {
-          'id': '6',
-          'name': '统计分析',
-          'pid': '3',
-          children: [{
-            'id': '6',
-            'name': '统计分析',
-            'pid': '3',
-          }]
-        }
-      ]
+      registerVisible: false
     }
   },
   methods: {
     loginSubmit: debounce(function () {
-      console.log('提交')
       this.$refs.loginForm.validate(vaild => {
         if (vaild) {
           console.log('校验通过')
           // 加载完毕
           this.loading = true
           // 保证登录后获得的token,全局都可以调用我们应该存储在cookie和vuex中
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            // 跳转页面到首页
-            this.$router.push({ path: '/home' })
-          }).catch((error) => {
-            console.log(error)
+          this.$store.dispatch('user/login', this.loginForm).then(res => {
+            if (res.msg === 'success') {
+              this.$router.push({ path: '/home' })
+            }
           })
           this.loading = false
-        } else {
-          console.log('错误的提交')
-          return false
         }
       })
       // const testEx = new MSchool('构造名字')
       // testEx.sayName('参数名字')
     }, 2000, true),
-    oginReset() {
-      // 防抖
-      // console.log('重置')
-      // this.loginForm = {
-      //   name: '',
-      //   password: ''
-      // }
+    loginReset() {
+      console.log('重置')
+      this.loginForm = {
+        name: '',
+        password: ''
+      }
     },
-    async register() {
-      const res = await this.register(this.loginForm)
-      console.log(res)
-    }
+    register() {
+      this.registerVisible = true
+      console.log('注册')
+    },
   }
 }
 </script>
@@ -180,6 +155,12 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
+.register_button {
+  float: right;
+  position: absolute;
+  right: 5%;
+  top: 5%;
+}
 .login-form {
   position: relative;
   width: 520px;

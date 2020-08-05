@@ -127,3 +127,18 @@ export function nodeFilter(array, value) {
 // export function nodeReduce(array, value) {
 
 // }
+
+/**
+ * new 函数
+ */
+
+function newObject() {
+  // 创建了一个空对象
+  const obj = {}
+  Constructor = [].shift.call(arguments)
+  obj.__proto__ = Constructor.prototype
+  let ret = Constructor.apply(obj, arguments)
+  // 判断返回值 如果返回值为对象就返回这个对象 返回值不为对象 就返回创建的对象
+  return typeof ret === 'object' ? ret : obj
+}
+

@@ -3,48 +3,18 @@
     <el-container>
       <el-aside width="200px">
         <!-- 左侧菜单栏 -->
-        <el-container style="height:100%;">
-          <el-header>
-            <div class="avatar"></div>
-          </el-header>
-          <el-main>
-            <el-menu
-              default-active="1-4-1"
-              class="el-menu-vertical-demo"
-              @open="handleOpen"
-              @close="handleClose"
-              :collapse="isCollapse"
-            >
-              <el-submenu index="1">
-                <span slot="title">导航一</span>
-                <el-menu-item-group>
-                  <el-menu-item index="1-1">选项1</el-menu-item>
-                  <el-menu-item index="1-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group>
-                  <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-menu-item index="2">
-                <span slot="title">导航二</span>
-              </el-menu-item>
-              <el-menu-item index="3" disabled>
-                <span slot="title">导航三</span>
-              </el-menu-item>
-              <el-menu-item index="4">
-                <span slot="title">导航四</span>
-              </el-menu-item>
-            </el-menu>
-          </el-main>
-        </el-container>
+        <Menu></Menu>
       </el-aside>
       <el-container>
         <el-header>
           <!-- 头部导航栏 -->
-          <el-button @click="loginOut">退出登录</el-button>
+          <el-button @click="loginOut" class="layout">退出登录</el-button>
+          <Navbar> </Navbar>
         </el-header>
         <el-main>
           <!-- 页面内容展示 -->
+          <!-- 占位可视路由窗口 -->
+          <router-view />
         </el-main>
       </el-container>
     </el-container>
@@ -54,7 +24,13 @@
 <script>
 import { removeToken } from '@/utils/auth'
 import Cookies from 'js-cookie'
+import Menu from '../../layout/rightMenu'
+import Navbar from '../../layout/navigation'
 export default {
+  components: {
+    Menu: Menu,
+    Navbar: Navbar
+  },
   data() {
     return {
 
@@ -73,18 +49,11 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.avatar {
-  height: 100%;
-  width: 100%;
-  background-color: skyblue;
+.layout {
+  float: right;
+  margin-right: 20px;
 }
-.el-header {
-  padding: 0px;
-}
-.el-main {
-  padding: 0px;
-}
-.el-menu {
-  height: 100%;
-}
+</style>
+
+<style lang="scss" >
 </style>

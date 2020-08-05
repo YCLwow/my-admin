@@ -9,7 +9,7 @@ export function login(data) {
     data
   })
 }
-export function registered(data) {
+export function register(data) {
   console.log('注册请求')
   return request({
     url: '/user/register',
