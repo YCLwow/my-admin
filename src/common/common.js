@@ -94,7 +94,7 @@ export function loadFile(event) {
 }
 
 /**
- * 嵌套数据筛选
+ * 嵌套数据筛选过滤
  * @param {Array} array 
  * @param {String} value 
  */
@@ -119,17 +119,28 @@ export function nodeFilter(array, value) {
   })
 }
 
-// /**
-//  * 嵌套数据扁平化
-//  * @param {Array} array 
-//  * @param {string} value 
-//  */
-// export function nodeReduce(array, value) {
-
-// }
+/**
+ * 嵌套数据扁平化
+ * @param {Array} array 
+ * @param {String} value
+ */
+export function arrayOpen(array, value) {
+  const sumArray = []
+  return function reduceArray(array, value) {
+    array.forEach((item) => {
+      sumArray.push(item[value])
+      if (item.children) {
+        reduceArray(item.children)
+      } else {
+        return false
+      }
+    })
+    return sumArray
+  }(array, value)
+}
 
 /**
- * new 函数
+ * new 函数的实现
  */
 
 function newObject() {
