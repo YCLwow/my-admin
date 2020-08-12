@@ -132,6 +132,7 @@ export function arrayOpen(array, value) {
       if (item.children) {
         reduceArray(item.children)
       } else {
+
         return false
       }
     })
